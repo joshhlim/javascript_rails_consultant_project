@@ -1,0 +1,15 @@
+<a href="<%= user_vehicle_path(user_vehicle) %>" class="list-group-item"> 
+	<h4 class="list-group-item-heading"><%= user_vehicle.model_year.name %></h4>
+	<p class="list-group-item-text">
+		<% if user_vehicle.name.present? %>
+		  <%= "Name: #{user_vehicle.name}" %><br />
+		<% end %>
+		
+		<% if user_vehicle.mileage.present? %>
+			<%= "Mileage: #{user_vehicle.mileage}" %><br />
+		<% end %>
+	</p>
+	<p class="list-group-item-text timestamp">
+		Added to garage <%= time_ago_in_words(user_vehicle.created_at) %> ago.
+	</p>
+</a>

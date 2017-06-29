@@ -1,0 +1,62 @@
+<% subtitle  = @user_requirement_item.requirement_item.full_display %>
+<% provide(:title, subtitle) %>
+<% locals_for_partial = {
+	    	             confirm_vote_type: get_confirm_vote_type,
+	    	             reject_vote_type:  get_reject_vote_type
+	    } %>
+<div class="row">
+	<% if false %><!-- Placeholder for images, when they become available -->
+		<div class="col-md-2 text-center">
+			Image Pending
+	  </div>
+  <% end %>
+  <div class="col-md-4">
+      <h3>
+      	<%= @user_requirement_item.requirement_item.full_display %> 
+      </h3>
+      <% if @user_requirement_item.brand.present? %>
+      	<h4><%= @user_requirement_item.brand %></h4>
+      <% end %>
+      <% if @user_requirement_item.name.present? %>
+      	<h4><%= @user_requirement_item.name %></h4>
+      <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <!-- TODO: Have the services that this can be used for listed here. Ideally, for the bikes this user owns -->
+    <% if @user_vehicle_services.any? %>
+      <h4>Use for</h4>
+      <table class="table table-striped">
+			  <thead>
+			    <tr>
+			      <th>Vehicle</th>
+			      <th>Service</th>
+			    </tr>
+			  </thead>
+
+			  <tbody>
+			    <% @user_vehicle_services.each do |user_vehicle_service| %>
+			      <tr>
+			      	<% vehicle_name = "#{user_vehicle_service['model_year_year']} #{user_vehicle_service['make_name']} #{user_vehicle_service['model_name']}" %>
+			      	<% vehicle_name += " (#{user_vehicle_service["user_vehicle_name"]})" unless user_vehicle_service["user_vehicle_name"].blank? %>
+			        <td><%= link_to vehicle_name, user_vehicle_path(user_vehicle_service["user_vehicle_id"]) %></td>
+			        <td><%= link_to user_vehicle_service["service_name"], model_year_service_path(user_vehicle_service["model_year_service_id"]) %></td>
+			      </tr>
+			    <% end %>
+			  </tbody>
+			</table>
+    <% end %>
+  </div>
+  <div class="col-md-6">
+    
+  </div>
+</div>
+
+<%= link_to 'Edit this item', edit_user_requirement_item_path(@user_requirement_item) %> |
+<%= link_to 'Go to Toolbox', user_requirement_items_path %>
+
+<% if Rails.env.development? %>
+  <%= debug(@user_requirement_item) %>
+  <%= debug(@user_vehicle_services.first) if @user_vehicle_services.any? %>
+<% end %>

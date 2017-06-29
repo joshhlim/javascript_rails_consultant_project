@@ -1,0 +1,26 @@
+<% provide(:title, @make.name) %>
+<div class="row">
+	<div class="col-md-2 text-center">
+		<%= image_tag_thumbnail_from_make_name(@make.name) %>
+  </div>
+  <div class="col-md-3">
+      <h3>      	
+        <%= "#{@make.name}" %>       
+      </h3>
+  </div>
+  <div class="col-md-7">
+    <% if @make.models.any? %>
+      <table class="table table-striped">
+				<thead>
+			    <tr>
+			    	<th>Models</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+        	<%= render @models %>
+        </tbody>
+      </table>
+      <%= will_paginate @models %>
+    <% end %>
+  </div>
+</div>

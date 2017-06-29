@@ -1,0 +1,16 @@
+<% provide(:title, "Edit Tool") %>
+<% item_category_name = @user_requirement_item.requirement_item.requirement_category.name %>
+<h1>
+	Edit <%= item_category_name %></br>
+	<small><%= @user_requirement_item.requirement_item.full_display %></small>
+</h1>
+
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<%= render 'edit_form' %>
+
+		<%= link_to "Show this #{item_category_name}", @user_requirement_item %> |
+		<%= link_to 'Go to Toolbox', user_requirement_items_path %>
+
+	</div>
+</div>

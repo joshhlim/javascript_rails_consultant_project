@@ -1,0 +1,12 @@
+<% @user ||= current_user %>
+<div class="stats">
+  <strong id="confirm-vote-count" class="stat">
+    <%= confirm_vote_count_for_user(@user) %>
+  </strong>
+  Confirm Votes Cast
+  <br />
+  <strong id="reject-vote-count" class="stat">
+    <%= reject_vote_count_for_user(@user) %>
+  </strong>
+  Reject Votes Cast
+</div>

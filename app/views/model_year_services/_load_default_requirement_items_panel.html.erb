@@ -1,0 +1,22 @@
+<div class="col-md-6">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Tool & Supply List Pending</h3>
+		</div>
+		<div class="panel-body">
+			<p class="text-center">
+				Oh no! No one has contributed a list of tools or supplies. Get things started by loading a standard list of tools/supplies and tweaking it as needed.
+			</p>
+			<div class="text-center">
+				<%= form_tag '/load_default_requirements', method: :patch do %>
+	
+				  <%= hidden_field_tag("id", @model_year_service.id) %>
+				
+				  <div class="actions">
+				    <%= button_tag "Load Tools & Supplies", class: "btn btn-large btn-primary" %>
+				  </div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>

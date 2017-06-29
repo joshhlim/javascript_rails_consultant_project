@@ -1,0 +1,18 @@
+.collapse-button {
+  margin: 0 auto;
+  font-size: 24px;
+  display: block;
+  background-color: #233237;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+}
+
+
+@media screen and (min-width:767px){
+	.collapse{display:block}
+  .collapse-button{display:none}
+}
+@media screen and (max-width:766px){
+	.collapse{display:none}
+}

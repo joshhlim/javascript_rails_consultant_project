@@ -1,0 +1,53 @@
+<% subtitle  = @user_vehicle.model_year.name %>
+<% subtitle += "(#{@user_vehicle.name})" if @user_vehicle.name.present? %>
+<% provide(:title, subtitle) %>
+<% locals_for_partial = {
+	    	             confirm_vote_type: get_confirm_vote_type,
+	    	             reject_vote_type:  get_reject_vote_type
+	    } %>
+<div class="row">
+	<div class="col-md-2 text-center">
+		<%= image_tag_thumbnail_from_make_model_year(@user_vehicle.model_year.make.name,
+		                                             @user_vehicle.model_year.model.name,
+		                                             @user_vehicle.model_year.year) %>
+  </div>
+  <div class="col-md-4">
+      <h3>
+      	<%= link_to(@user_vehicle.model_year.name, model_year_path(@user_vehicle.model_year)) %> 
+      </h3>
+      <% if @user_vehicle.name.present? %>
+      	<h4><%= @user_vehicle.name %></h4>
+      <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <% if @model_year_services.any? %>
+      <h4>Tool lookup</h4>
+      <table class="table table-striped">
+			  <tbody>
+      	
+        <%= render partial: 'model_year_services/model_year_service_stub', 
+                   collection: @model_year_services,
+                   locals: locals_for_partial %>
+        </tbody>
+			</table>
+      <%= will_paginate @model_year_services %>
+    <% end %>
+  </div>
+  <div class="col-md-6">
+    
+  </div>
+</div>
+
+<%= link_to 'Edit this vehicle', edit_user_vehicle_path(@user_vehicle) %> |
+<%= link_to 'Go to Garage', user_vehicles_path %>
+
+<%= render 'specifications/edit_modal'               if signed_in? %>
+<%= render 'model_year_services/edit_interval_modal' if signed_in? %>
+
+<% if Rails.env.development? %>
+  <%= debug(@user_vehicle) %>
+  <%= debug(@model_year_services.first) if @model_year_services.any? %>
+  <%= debug(@model_year_services) %>
+<% end %>

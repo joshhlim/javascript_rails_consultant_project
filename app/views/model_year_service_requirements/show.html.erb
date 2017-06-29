@@ -1,0 +1,33 @@
+<div class="row">
+	<div class="col-md-4 col-md-offset-2">
+		<ul class="list-group">
+			<li class="list-group-item">
+				New Entry
+			</li>
+			<li class="list-group-item">
+				<strong>Category:</strong>
+				<%= @model_year_service_requirement.requirement_category.name %>
+			</li>
+			<li class="list-group-item">
+				<strong>Name:</strong>
+				<%= @model_year_service_requirement.requirement_item.name %>
+			</li>
+			<li class="list-group-item">
+				<strong>Detail:</strong>
+				<%= @model_year_service_requirement.requirement_item.detail %>
+			</li>
+			<li class="list-group-item">
+				<strong>Quantity:</strong>
+				<%= @model_year_service_requirement.quantity %>
+			</li>
+			<li class="list-group-item">
+				<strong>Quantity Unit:</strong>
+				<%= @model_year_service_requirement.quantity_unit %>
+			</li>
+		</ul>
+	</div>
+	<% if @old_model_year_service_requirement %>
+	  <%= render partial: 'old_entry', locals: { entry: @old_model_year_service_requirement } %>
+	<% end %>
+</div>
+<%= link_to 'Go back to Maintenance Page', model_year_service_path(@model_year_service_requirement.model_year_service) %>

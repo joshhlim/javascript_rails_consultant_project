@@ -1,0 +1,30 @@
+<% if entry.replaced_by.present? %>
+  <% current_entry = entry.replaced_by %>
+<% else %>
+  <% current_entry = entry %>
+<% end %>
+<ul class="list-group">
+	<li class="list-group-item">
+		<%= list_header %>
+	</li>
+	<li class="list-group-item">
+		<strong>Vehicle:</strong>
+		<%= current_entry.model_year_service.model_year.name %>
+	</li>
+	<li class="list-group-item">
+		<strong>Service:</strong>
+		<%= current_entry.model_year_service.service.name %>
+	</li>
+	<li class="list-group-item">
+		<strong>First Service:</strong>
+		<%= entry.first_service_miles %> mi.
+	</li>
+	<li class="list-group-item">
+		<strong>Service Interval (miles):</strong>
+		<%= entry.interval_miles %> mi.
+	</li>
+	<li class="list-group-item">
+		<strong>Service Interval (months):</strong>
+		<%= entry.interval_months %> mo.
+	</li>
+</ul>

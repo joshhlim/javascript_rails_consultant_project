@@ -1,0 +1,37 @@
+<% provide(:title, 'Help')%>
+
+<div class="row">
+	<div class="col-md-12">
+		<h1>Help Page</h1>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Following the steps below will help you make full use of the site:</h3>
+			</div>
+			<div class="panel-body">
+        <dl>
+				  <dt>Step 1</dt>
+				  <dd>Use the dropdowns on the <%= link_to 'homepage', root_url %> to load your vehicle and service.</dd>
+				  <dt>Step 2</dt>
+				  <dd>Review the list of tools, supplies, etc. needed for the service. 
+				  	  Hopefully, the list is complete and accurate and helps you get the job done. 
+				  	  If not, request an update, or contribute by updating the listing, which anyone with an 
+				  	  <%= link_to 'account', signin_path %> can do.</dd>
+				  <dt>Step 3</dt>
+				  <dd>Confirm each tool/supply, etc. by clicking the checkmark next to each accurate item.
+				  	  Check for detail (e.g. "Socket (21mm)" rather than "Socket"). 
+				  	  An item that lacks detail should not be confirmed or rejected until the detail is added, which can be done
+				  	  by anyone with an <%= link_to 'account', signin_path %>.</dd>
+				  <dt>Step 4</dt>
+				  <dd>Reject each tool/supply, etc. that is wrong for the job (optional items should not be rejected).</dd>
+				  <dt>Step 5</dt>
+				  <dd>Add the vehicle to your garage for quick and easy access later, and add the tools that you own to your
+				  	  toolbox to keep an inventory.</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+</div>

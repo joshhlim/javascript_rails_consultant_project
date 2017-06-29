@@ -1,0 +1,210 @@
+// Place all the styles related to the StaticPages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#logo {
+    font-family: 'Teko';
+    font-size: 48px;
+}
+
+video#bgvid, .vid-filter, img#bgimg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    background-size: cover;
+}
+.vid-filter {
+    background-color: #233237;
+    z-index: -90;
+    filter: opacity(66%);
+}
+
+img#bgimg {
+    display: none;
+}
+
+.landing-subheader {
+    color: white;
+    font-size: 50px;
+    line-height: 40px;
+    text-align: right;
+    margin-right: 30px;
+    letter-spacing: .01em;
+}
+
+.landing-header {
+    background-color: transparent;
+    border: none;
+    font-size: 1.1em;
+}
+.footer {
+    border: none;
+    margin: 0;
+    height: 50px;
+}
+
+.navbar-inverse {
+    padding: 10px 0;
+}
+
+.homepage-view-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0 100px;
+}
+
+.jumbotron  {
+    background-color: transparent;
+    padding: 80px;
+}
+.jumbotron h1 {
+    color: #EAC67A;
+    font-size: 200px;
+    text-transform: uppercase;
+    line-height: 100px;
+}
+h1 {
+    font-size: 80px;
+    line-height: 60px;
+}
+h4 {
+    font-size: 48px;
+    display: inline-block;
+}
+aside section h1 {
+    font-size: 40px;
+}
+.garage-header {
+    display: block;
+    text-align: center;
+}
+.vehicle-info {
+    border: solid 1px lightgrey;
+    padding: 20px;
+    display: inline-block;
+    width: 100%;
+}
+.vehicle-info input {
+    max-width: 150px;
+}
+.vehicle-info span {
+    font-weight: bolder;
+    color: #984B43;
+}
+.vehicle-info li {
+    list-style-type: none;
+}
+.vehicle-info ul {
+    padding: 0 20px;
+}
+
+.list-group-item {
+    box-sizing: border-box;
+}
+
+#add_tool_button {
+    background-color: #EAC67A;
+    padding: 10px;
+    color: white;
+    display: inline-block;
+    border-radius: 5px;
+    margin: 10px 15px;
+}
+
+
+// Media Queries
+@media only screen and (min-width: 750px) {
+    .vehicle-info-left {
+        width: 40%;
+        float: left;
+        padding: 20px;
+    }
+    .vehicle-info-left img {
+        width: 100%;
+    }
+    .vehicle-info-right {
+        // display: inline-block;
+        width: 60%;
+        float: left;
+    }
+    .vehicle-info-mileage {
+        float: left;
+        width: 40%;
+    }
+    .vehicle-info-maintenance {
+        float: left;
+        width: 60%;
+    }
+}
+@media only screen and (max-width: 1300px) {
+    .jumbotron h1 {
+        font-size: 180px;
+        line-height: 120px;
+    }
+}
+// This is for mobile
+@media only screen and (max-width: 500px) {
+    video#bgvid {
+        display: none;
+    }
+    img#bgimg {
+        display: block;
+    }
+    .landing-header {
+        background-color: #233237;
+    }
+    .jumbotron {
+        padding: 0;
+    }
+    .btn-lg, .btn-group-lg > .btn {
+        font-size: 13px;
+    }
+    .jumbotron h1 {
+        font-size: 120px;
+        line-height: 80px;
+    }
+    .vehicle-info {
+        padding: 50px;
+    }
+    .vehicle-info>* {
+        display: block;
+    }
+    .vehicle-info>img {
+        margin: 0 auto;
+        width: 180px;
+        display: block;
+    }
+    .vehicle-info ul {
+        padding: 0;
+    }
+    h4 {
+    margin-left: 0px;
+        font-size: 32px;
+    }
+    .vehicle-info-left img {
+    width: 90%;
+    }
+    .dashboard-toolbox {
+        font-size: .8em;
+    }
+}
+@media only screen and (max-width: 750px) {
+    .vehicle-info img {
+        width: 70%;
+    }
+}
+
+
+.mileage-update-form {
+    display: none;
+}

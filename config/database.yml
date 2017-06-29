@@ -1,0 +1,2 @@
+development: "postgresql://postgres@localhost:5432/zaftool_development"
+test: "postgresql://postgres@localhost:5432/zaftool_test"

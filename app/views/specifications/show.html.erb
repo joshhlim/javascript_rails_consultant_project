@@ -1,0 +1,19 @@
+<div class="row">
+	<% if @specification %>
+		<div class="col-md-4 col-md-offset-2">
+			<%= render partial: 'entry', locals: { entry: @specification, list_header: "New Entry"  } %>
+		</div>
+	<% end %>
+	
+	<% if @specification.replaced %>
+	  <div class="col-md-4">
+	  	<%= render partial: 'entry', locals: { entry: @specification.replaced, list_header: "Old Entry"  } %>
+	  </div>
+	<% end %>
+</div>
+<%= link_to 'Go to Vehicle Page', model_year_path(@specification.model_year_id) %>
+
+<% if Rails.env.development? %>
+  <%= debug(@specification) %>
+  <%= debug(@specification.replaced) %>
+<% end %>

@@ -1,0 +1,5 @@
+<% html = render 'specifications/new_form' %>
+
+$("#new-specification-modal-window")
+	.find(".modal-content")
+	.html("<%= escape_javascript html %>");

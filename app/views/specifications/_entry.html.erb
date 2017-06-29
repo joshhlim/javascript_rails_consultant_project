@@ -1,0 +1,17 @@
+<ul class="list-group">
+	<li class="list-group-item">
+		<%= list_header %>
+	</li>
+	<li class="list-group-item">
+		<strong>Specification:</strong>
+		<%= entry.specification_category.name %>
+	</li>
+	<li class="list-group-item">
+		<strong>Single Value:</strong>
+		<%= entry.single_value_str %>
+	</li>
+	<li class="list-group-item">
+		<strong>Range:</strong>
+		<%= print_spec_range(entry) %>
+	</li>
+</ul>

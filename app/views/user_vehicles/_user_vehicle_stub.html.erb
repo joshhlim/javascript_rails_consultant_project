@@ -1,0 +1,5 @@
+<li>
+	<% link_text  = "#{user_vehicle_stub.model_year.name}" %>
+	<% link_text += " (#{user_vehicle_stub.name})" unless user_vehicle_stub.name.blank?%> 
+	<%= link_to link_text, user_vehicle_stub %>
+</li>

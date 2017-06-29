@@ -1,0 +1,15 @@
+<% plural_name   = blank_requirement_items[:name].pluralize %>
+<% singular_name = blank_requirement_items[:name] %>
+
+<div class="col-md-4 requirement-list">
+	<h4><%= plural_name %> </h4>
+	<div class="panel panel-default">
+    <div class="panel-body text-center">
+    	<%= "No #{plural_name} have been added yet. Use button below to add" %>
+    </div>
+  </div>
+	<br />
+	<div class="text-center">
+		<%= render partial: 'add_requirement_button', locals: { service_requirement_name: singular_name } %>
+	</div>
+</div>

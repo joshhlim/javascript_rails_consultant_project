@@ -1,0 +1,22 @@
+<div class="row">
+	<% if @model_year_service_specification.specification %>
+		<div class="col-md-4 col-md-offset-2">
+			<%= render partial: 'entry', locals: { entry: @model_year_service_specification.specification, list_header: "New Entry"  } %>
+		</div>
+	<% end %>
+	
+	<% if @model_year_service_specification.specification.replaced %>
+	  <div class="col-md-4">
+	  	<%= render partial: 'entry', locals: { entry: @model_year_service_specification.specification.replaced, list_header: "Old Entry"  } %>
+	  </div>
+	<% end %>
+</div>
+Go To: 
+<%= link_to 'Maintenance Page', model_year_service_path(@model_year_service_specification.model_year_service_id) %> | 
+<%= link_to 'Vehicle Page', model_year_path(@model_year_service_specification.specification.model_year_id) %>
+
+<% if Rails.env.development? %>
+  <%= debug(@model_year_service_specification.specification) %>
+  <%= debug(@model_year_service_specification) %>
+<% end %>
+

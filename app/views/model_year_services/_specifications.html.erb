@@ -1,0 +1,16 @@
+<div class="col-md-4 requirement-list">
+	<h4> <%= name.pluralize %> </h4>
+	<table id="specifications-table" class="table table-striped">
+		<tbody>
+			<% locals_for_partial = {
+			confirm_vote_type: get_confirm_vote_type,
+			reject_vote_type:  get_reject_vote_type
+			} %>
+			<%= render partial: 'specification', collection: collection, locals: locals_for_partial	%>
+		</tbody>
+	</table>
+	<br />
+	<div class="text-center">
+		<%= render partial: 'add_specification_button' %>
+	</div>
+</div>

@@ -1,0 +1,99 @@
+<% confirm_class_list   = 'zf-confirm'     %>
+<% reject_class_list    = 'zf-reject'      %>
+<% text_class_list    = 'text' %>
+<% existing_vote      = existing_vote(quick_spec) %>
+<% specification      = quick_spec %>
+
+
+<% if existing_vote.present?
+    if existing_vote.vote_type_id == confirm_vote_type.id
+      confirm_class_list += ' confirmed in-active'
+      reject_class_list  += ' in-active'
+      text_class_list    += ' confirmed'
+    elsif existing_vote.vote_type_id == reject_vote_type.id
+      confirm_class_list += ' in-active'
+      reject_class_list  += ' rejected in-active'
+      text_class_list    += ' rejected'
+    end
+  end
+%>
+
+<tr>
+	<td>
+		<%= quick_spec.specification_category.name %>
+	</td>
+
+	<td class="no-stretch">
+		<% votes_hash = { specification_id: quick_spec.id, vote_type_id: confirm_vote_type} %>
+
+			<%= link_to votes_path(votes_hash),
+			id: "spec-#{quick_spec.id}-confirm-link",
+			class: confirm_class_list,
+			action: :create,
+			method: :post,
+			remote: true,
+			"data-toggle" => "tooltip",
+			"data-placement" => "top",
+			"title" => "Confirm" do %>
+			  <span id="spec-<%= quick_spec.id %>-confirm-icon" class="fa fa-lg fa-check fa-fw"></span>
+			<% end %>
+
+	  <% votes_hash = { specification_id: quick_spec.id, vote_type_id: reject_vote_type} %>
+		<%= link_to votes_path(votes_hash),
+		id: "spec-#{quick_spec.id}-reject-link",
+		class: reject_class_list,
+		action: :create,
+		method: :post,
+		:remote => true,
+		"data-toggle" => "tooltip",
+		"data-placement" => "top",
+		"title" => "Reject" do %>
+		  <span id="spec-<%= quick_spec.id %>-reject-icon" class="fa fa-lg fa-remove fa-fw"></span>
+		<% end %>
+
+
+	</td>
+	<td class="no-stretch <%= text_class_list %>">
+			<% if specification.single_value_str.present? &&
+			    (specification.range_start_str.present? || specification.range_end_str.present?) %>
+		  <span id="specification-<%= specification.id %>-value-text"
+		  	    class="dotted"
+				    data-toggle="tooltip"
+			      data-placement="top"
+			      title="Range: <%= print_spec_range(specification) %>">
+			  <%= print_spec_single_value(specification) %>
+			</span>
+		<% else %>
+		  <%= print_spec(specification) %>
+		<% end %>
+	</td>
+	<td class="no-stretch">
+		<% if signed_in? %>
+		  <a id="specification-<%= specification.id %>-edit-link"
+				 class="<%= edit_class_list %>"
+				 data-toggle="modal"
+				 data-target="#edit-specification-modal-window"
+				 data-remote="true"
+				 href="<%= edit_specification_path(specification) %>">
+				<i id="specification-<%= specification.id %>-edit-icon"
+					    class="fa fa-lg fa-pencil fa-fw"
+					    data-toggle="tooltip"
+					    data-placement="top"
+				      title="Edit/Add Detail">
+				</i>
+		  </a>
+		<% else %>
+			<a id="specification-<%= specification.id %>-edit-link"
+				 class="<%= edit_class_list %>"
+				 data-toggle="modal"
+				 data-target="#sign-in-modal">
+				<i id="specification-<%= specification.id %>-edit-icon"
+					    class="fa fa-lg fa-pencil fa-fw"
+					    data-toggle="tooltip"
+					    data-placement="top"
+				      title="Edit/Add Detail">
+				</i>
+		  </a>
+	  <% end %>
+  </td>
+</tr>

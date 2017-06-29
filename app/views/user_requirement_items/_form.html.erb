@@ -1,0 +1,8 @@
+<%= simple_form_for(@user_vehicle, html: { class: 'form-horizontal' }) do |f| %>
+  
+  <%= render 'model_year_dropdowns' %>
+  <%= f.input :name, label: "Nickname", required: false, input_html: { class: 'form-control' }, placeholder: "Nickname (optional)" %>
+  <%= f.input :mileage, required: false, input_html: { class: 'form-control' }, placeholder: "e.g. 8000 (optional)" %>
+  <%= button_tag "Add to Garage", class: "btn btn-primary" %>
+  
+<% end %>

@@ -1,0 +1,33 @@
+<h1>My Toolbox</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Tool/Supply</th>
+      <th>Nickname</th>
+      <th>Brand</th>
+      <th>Description</th>
+      <th>Quantity</th>
+      <th>Added</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @user_requirement_items.each do |item| %>
+      <tr>
+        <td><%= item.requirement_item.full_display %></td>
+        <td><%= item.name %></td>
+        <td><%= item.brand %></td>
+        <td><%= item.description %></td>
+        <td><%= item.quantity %></td>
+        <td><%= "#{time_ago_in_words(item.created_at)} ago" %>
+        <td><%= link_to 'Show', item %> | <%= link_to 'Edit', edit_user_requirement_item_path(item) %> | <%= link_to 'Delete', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to 'Add to Toolbox', new_user_requirement_item_path %>

@@ -1,0 +1,16 @@
+<div class="col-md-4 requirement-list">
+	<h4> <%= service_requirement[:name].pluralize %> </h4>
+	<table class="table table-striped">
+		<tbody>
+			<% locals_for_partial = {
+			confirm_vote_type: get_confirm_vote_type,
+			reject_vote_type:  get_reject_vote_type
+			} %>
+			<%= render partial: 'item', collection: service_requirement[:items], locals: locals_for_partial	%>
+		</tbody>
+	</table>
+	<br />
+	<div class="text-center">
+		<%= render partial: 'add_requirement_button', locals: { service_requirement_name: service_requirement[:name] } %>
+	</div>
+</div>

@@ -1,0 +1,78 @@
+<% provide(:title, "#{@model_year_service.model_year.name} #{@model_year_service.service.name}") %>
+<% locals_for_partial = {
+			confirm_vote_type: get_confirm_vote_type,
+			reject_vote_type:  get_reject_vote_type
+			} %>
+<div class="row">
+	<div class="col-md-2 text-center">
+		<%= image_tag_thumbnail_from_make_model_year(@model_year_service.model_year.make.name,
+		                                             @model_year_service.model_year.model.name,
+		                                             @model_year_service.model_year.year) %>
+  </div>
+  <div class="col-md-4">
+      <h3>      	
+        <%= "#{@model_year_service.model_year.name}" %><br />
+        <%= "#{@model_year_service.service.name}" %>        
+      </h3>
+      <% if @model_year_service.first_service_miles.present? &&
+      	    @model_year_service.interval_miles.present?      &&
+      	    @model_year_service.interval_months                 %>
+	      <span>1st Service: <%= "#{@model_year_service.first_service_miles}" %>mi.</span> | 
+	      <span>Interval: <%= "#{@model_year_service.interval_miles}" %>mi. / <%= "#{@model_year_service.interval_months}" %>mo.</span>
+	    <% end %>
+  </div>
+  <div class="col-md-6 pull-right">
+		<%= render 'button_toolbar' %>
+  </div>
+</div>
+<div class="row" id="what-you-need">
+	<div class="col-md-12 text-center">
+		<h3>What you need</h3>
+	</div>
+	<div class="col-md-12">
+	  <% if @service_requirements.any? %>
+	    <%= render partial: 'service_requirement', collection: @service_requirements %>
+	  <% else %>
+	    <%= render partial: 'pending_service_requirements' %>
+	  <% end %>
+	  
+	  <% if @model_year_service_specifications.any? %>
+	    <%= render partial: 'specifications', locals: { name: "Specs", collection: @model_year_service_specifications } %>
+	  <% else %>
+	    <%= render partial: 'empty_specifications' %>
+	  <% end %>
+	</div>
+</div>
+<div class="row" id="how-you-do-it">
+	<div class="col-md-12 text-center">
+		<h3>How you do it</h3>		
+	</div>
+	<div class="col-md-6">
+	  <% if @videos.any? %>
+	    <%= render partial: 'video_frame', locals: { video: @videos.first } %>
+	  <% else %>
+	    <p class="text-center">No Video Available.</p>
+	  <% end %>  
+	</div>
+	<div class="col-md-6">
+	  <% if @videos.any? %>	    
+	    <p class="text-center">Additional Videos</p>
+	    	<table class="table table-striped">
+					<tbody>
+		      	<%= render partial: 'video', collection: @videos, locals: locals_for_partial %>	
+	        </tbody>
+	      </table>  
+	  <% else %>
+	    <p class="text-center">No Additional Videos Available.</p>
+	  <% end %>	 
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+	</div>
+</div>
+<%= render 'model_year_service_requirements/edit_modal'   unless !signed_in? %>
+<%= render 'model_year_service_requirements/new_modal'    unless !signed_in? %>
+<%= render 'model_year_service_specifications/edit_modal' unless !signed_in? %>
+<%= render 'model_year_service_specifications/new_modal'  unless !signed_in? %>
+<%= render 'user_vehicles/add_to_garage_modal'            unless !signed_in? %>

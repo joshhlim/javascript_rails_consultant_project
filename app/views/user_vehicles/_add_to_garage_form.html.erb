@@ -1,0 +1,19 @@
+<% if signed_in? %>
+	<%= form_tag user_vehicles_path, method: :post do %>
+	
+	  <%= hidden_field_tag("user_vehicle[model_year_id]", @model_year.id) %>
+	
+	  
+	  <div class="field">
+	  	<%= label_tag "Nickname (optional):" %><br />
+	  	<%= text_field_tag "user_vehicle[name]", nil, placeholder: "Nickname (optional)", class: "form-control"  %>
+	  </div>
+	  <div class="field">
+	  	<%= label_tag 'Mileage (optional):' %><br />
+	  	<%= number_field_tag "user_vehicle[mileage]", nil, placeholder: "e.g. 8000 (optional)", class: "form-control" %>
+	  </div>
+	  <div class="actions">
+	    <%= button_tag "Add to Garage", class: "btn btn-large btn-primary" %>
+	  </div>
+	<% end %>
+<% end %>

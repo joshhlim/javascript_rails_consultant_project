@@ -1,0 +1,28 @@
+<% provide(:title, "My Garage") %>
+<h1>My Garage</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Vehicle</th>
+      <th>Nickname</th>
+      <th>Mileage</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @user_vehicles.each do |user_vehicle| %>
+      <tr>
+        <td><%= link_to(user_vehicle.model_year.name, model_year_path(user_vehicle.model_year)) %></td>
+        <td><%= link_to user_vehicle.name, user_vehicle %></td>
+        <td><%= user_vehicle.mileage %></td>
+        <td><%= link_to 'Show', user_vehicle %> | <%= link_to 'Edit', edit_user_vehicle_path(user_vehicle) %> | <%= link_to 'Delete', user_vehicle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Add to Garage', new_user_vehicle_path %>

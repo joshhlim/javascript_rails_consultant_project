@@ -1,0 +1,6 @@
+$("#vehicle-<%=@user_vehicle.id%>").find("p").replaceWith("<p><strong>Mileage</strong> <%= @user_vehicle.mileage %>");
+
+$("#vehicle-<%=@user_vehicle.id%>").find($("li")).replaceWith("<span>Maintenance due:</span><ul><% ModelYear.find(@user_vehicle.model_year_id).model_year_services.main_services.each do |service| %><% if service.need_service?(@user_vehicle.mileage) %><li><%= link_to service.service.name, model_year_service_path(service.id) %></li><% end %><% end %></ul>")
+
+
+

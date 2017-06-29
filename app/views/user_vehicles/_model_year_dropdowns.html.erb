@@ -1,0 +1,20 @@
+<%= select_tag  :make_id,
+								options_from_collection_for_select(@makes, "id", "name"),
+								:prompt => "Select Make",
+								:class => 'form-control' %>
+
+<%= select_tag  :model_id, options_from_collection_for_select([], "id", "name"), :class => 'form-control',
+								"data-option-dependent" => true,
+								"data-option-observed" => "make_id",
+								"data-option-url" => "/makes/:make_id:/models.json",
+								"data-option-key-method" => :id,
+								"data-option-value-method" => :name,
+								"data-option-prompt-text" => "Select Model" %>
+
+<%= select_tag 	:model_year_id, options_from_collection_for_select([], "id", "year"), :class => 'form-control',
+								"data-option-dependent" => true,
+								"data-option-observed" => "model_id",
+								"data-option-url" => "/models/:model_id:/model_years.json",
+								"data-option-key-method" => :id,
+								"data-option-value-method" => :year,
+								"data-option-prompt-text" => "Select Model Year" %>

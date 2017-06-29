@@ -1,0 +1,13 @@
+<%= simple_form_for(@user_requirement_item, html: { class: 'form-horizontal' }) do |f| %>
+  
+  <%= select_tag 'user_requirement_item[requirement_item_id]', 
+                 options_from_collection_for_select(@tools, "id", "full_display"), 
+                 class: 'select required form-control',
+                 prompt: 'Select Tool/Supply (Required)',
+                 required: true %>
+  <%= f.input :name, label: "Nickname", required: false, input_html: { class: 'form-control' }, placeholder: "Nickname (optional)" %>
+  <%= f.input :brand, label: "Brand", required: false, input_html: { class: 'form-control' }, placeholder: "Brand name (optional)" %>
+  <%= f.input :description, label: "Description", required: false, input_html: { class: 'form-control' }, placeholder: "Description (optional)" %>
+  <%= button_tag "Add to Toolbox", class: "btn btn-primary" %>
+  
+<% end %>

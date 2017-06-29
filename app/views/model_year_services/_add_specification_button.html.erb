@@ -1,0 +1,17 @@
+<% if signed_in? %>
+  <% data_target = "#new-model-year-service-specification-modal-window" %>
+  <% data_remote = "true" %>
+  <% href = new_model_year_service_specification_path(model_year_service_id: @model_year_service.id, model_year_id: @model_year_service.model_year.id) %>
+<% else %>
+  <% data_target = "#sign-in-modal"%>
+  <% data_remote = "false" %>
+  <% href = nil %>
+<% end %>
+<a href="<%= href %>" 
+	 class="btn btn-default" 
+	 role="button" 
+	 data-toggle="modal"
+	 data-remote="<%= data_remote %>" 
+	 data-target="<%= data_target %>" >
+	<i class="fa fa-lg fa-plus fa-fw"></i> Add Spec 
+</a>

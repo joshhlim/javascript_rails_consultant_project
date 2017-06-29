@@ -1,0 +1,5 @@
+<% html = render 'model_year_services/edit_interval_form' %>
+
+$("#edit-model-year-service-interval-modal-window")
+	.find(".modal-content")
+	.html("<%= escape_javascript html %>");

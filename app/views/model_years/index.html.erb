@@ -1,0 +1,15 @@
+<% provide(:title, 'All Model Years') %>
+<h1>All model years</h1>
+
+<table class="table table-striped">
+	<thead>
+    <tr>
+    	<th>Model Years</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @model_years %>
+  </tbody>
+</table>
+
+<%= will_paginate %>

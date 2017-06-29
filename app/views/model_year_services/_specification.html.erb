@@ -1,0 +1,132 @@
+<% confirm_class_list    = 'zf-confirm' %>
+<% reject_class_list     = 'zf-reject'  %>
+<% minus_class_list      = 'zf-minus'   %>
+<% spec_name_class_list  = 'text' %>
+<% spec_value_class_list = 'text'%>
+
+<% if signed_in? %>
+  <% existing_spec_value_vote   = specification.specification.votes.where(user_id: current_user.id).first %>
+  <% existing_spec_applies_vote = specification.votes.find_by(user_id: current_user.id) %>
+<% else %>
+  <% existing_spec_value_vote   = specification.specification.votes.where(session_id: request.session_options[:id]).first %>
+  <% existing_spec_applies_vote = specification.votes.find_by(session_id: request.session_options[:id]) %>
+  <% existing_spec_value_vote   ||= specification.specification.votes.where(ip_address: request.remote_ip).first %>
+  <% existing_spec_applies_vote ||= specification.votes.find_by(ip_address: request.remote_ip) %>
+<% end %>
+
+<% if existing_spec_value_vote.present?
+	   if existing_spec_value_vote.vote_type_id == confirm_vote_type.id
+       confirm_class_list    += ' confirmed in-active'
+       reject_class_list     += ' in-active'
+       spec_name_class_list  += ' confirmed'
+       spec_value_class_list += ' confirmed'
+     elsif existing_spec_value_vote.vote_type_id == reject_vote_type.id
+     	 confirm_class_list    += ' in-active'
+       reject_class_list     += ' rejected in-active'
+       spec_value_class_list += ' rejected'
+     end
+   end
+
+   if existing_spec_applies_vote.present?
+   	 if existing_spec_applies_vote.vote_type_id == reject_vote_type.id
+	   	 confirm_class_list    += ' in-active'
+	     minus_class_list      += ' rejected in-active'
+	     spec_name_class_list  += ' rejected'
+	   end
+   end
+  %>
+
+<tr>
+	<td class="no-stretch">
+		<% vote_hash = { specification_id: specification.specification.id,
+			                   vote_type_id: confirm_vote_type,
+			                   model_year_service_specification_id: specification.id} %>
+
+		<%= link_to	raw("<span id='specification-#{specification.id}-confirm-icon' class='fa fa-lg fa-check fa-fw'></span>"),
+	             	votes_path(vote_hash),
+								id: "specification-#{specification.id}-confirm-link",
+								class: confirm_class_list,
+								action: :create,
+								method: :post,
+								remote: true,
+								"data-toggle" => "tooltip",
+								"data-placement" => "top",
+								"title" => "Confirm" %>
+
+		<% vote_hash = { specification_id: specification.specification.id,
+			                   vote_type_id: reject_vote_type } %>
+
+		<%=	link_to raw("<span id=\"specification-#{specification.id}-reject-icon\" class=\"fa fa-lg fa-remove fa-fw\"></span>"),
+		            votes_path(vote_hash),
+		            id: "specification-#{specification.id}-reject-link",
+		            class: reject_class_list,
+		            action: :create,
+		            method: :post,
+		            :remote => true,
+		            "rel" => "tooltip",
+		            "data-toggle" => "tooltip",
+		            "data-placement" => "top",
+		            "title" => "Reject" %>
+
+		<% vote_hash = { vote_type_id: reject_vote_type,
+			                   model_year_service_specification_id: specification.id } %>
+
+		<%= link_to	raw("<span id=\"specification-#{specification.id}-minus-icon\" class=\"fa fa-lg fa-minus fa-fw\"></span>"),
+	             	votes_path(vote_hash),
+		            id: "specification-#{specification.id}-reject-link",
+		            class: minus_class_list,
+		            action: :create,
+		            method: :post,
+		            :remote => true,
+		            "data-toggle" => "tooltip",
+		            "data-placement" => "top",
+		            "title" => "Not needed for this service" %>
+
+	</td>
+	<td class="<%= spec_name_class_list %>">
+		<%= specification.specification_category.name %>
+	</td>
+	<td class="no-stretch <%= spec_value_class_list %>">
+		<% if specification.specification.single_value_str.present? &&
+			    (specification.specification.range_start_str.present? || specification.specification.range_end_str.present?) %>
+		  <span id="specification-<%= specification.id %>-value-text"
+		  	    class="dotted"
+				    data-toggle="tooltip"
+			      data-placement="top"
+			      title="Range: <%= print_spec_range(specification.specification) %>">
+			  <%= print_spec_single_value(specification.specification) %>
+			</span>
+		<% else %>
+		  <%= print_spec(specification.specification) %>
+		<% end %>
+	</td>
+	<td class="no-stretch">
+		<% if signed_in? %>
+		  <a id="specification-<%= specification.id %>-edit-link"
+				 class="<%= edit_class_list %>"
+				 data-toggle="modal"
+				 data-target="#edit-model-year-service-specification-modal-window"
+				 data-remote="true"
+				 href="<%= edit_model_year_service_specification_path(specification) %>">
+				<i id="specification-<%= specification.id %>-edit-icon"
+					    class="fa fa-lg fa-pencil fa-fw"
+					    data-toggle="tooltip"
+					    data-placement="top"
+				      title="Edit/Add Detail">
+				</i>
+		  </a>
+		<% else %>
+			<a id="specification-<%= specification.id %>-edit-link"
+				 class="<%= edit_class_list %>"
+				 data-toggle="modal"
+				 data-target="#sign-in-modal">
+				<i id="specification-<%= specification.id %>-edit-icon"
+					    class="fa fa-lg fa-pencil fa-fw"
+					    data-toggle="tooltip"
+					    data-placement="top"
+				      title="Edit/Add Detail">
+				</i>
+		  </a>
+	  <% end %>
+	</td>
+</tr>

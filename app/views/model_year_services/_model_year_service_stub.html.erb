@@ -1,0 +1,99 @@
+<% confirm_class_list   = 'zf-confirm'     %>
+<% reject_class_list    = 'zf-reject'      %>
+<% edit_class_list      = 'zf-edit'       %>
+<% interval_text_class_list = 'text' %>
+<% existing_vote = nil %>
+<% interval = model_year_service_stub.interval %>
+
+<% if signed_in? %>
+	<% existing_vote = interval.votes.where(user_id: current_user.id).first unless interval.blank? %>
+<% else %>
+	<% existing_vote = interval.votes.where(ip_address: request.remote_ip).first  unless interval.blank? %>
+	<% existing_vote ||= interval.votes.where(session_id: request.session_options[:id]).first unless interval.blank? %>
+<% end %>
+
+<% if existing_vote.present?
+    if existing_vote.vote_type_id == confirm_vote_type.id
+      confirm_class_list   += ' confirmed in-active'
+      reject_class_list    += ' in-active'
+      interval_text_class_list += ' confirmed'
+    elsif existing_vote.vote_type_id == reject_vote_type.id
+      confirm_class_list   += ' in-active'
+      reject_class_list    += ' rejected in-active'
+      interval_text_class_list += ' rejected'
+    end
+  end
+%>
+
+<tr>
+	<td>
+		<%= link_to model_year_service_stub.service.name, model_year_service_stub %>
+	</td>
+
+	<td class="no-stretch">
+		<% vote_hash = { interval_id: interval.id, vote_type_id: confirm_vote_type} %>
+
+			<%= link_to votes_path(vote_hash),
+			id: "service-#{model_year_service_stub.id}-confirm-link",
+			class: confirm_class_list,
+			action: :create,
+			method: :post,
+			remote: true,
+			"data-toggle" => "tooltip",
+			"data-placement" => "top",
+			"title" => "Confirm" do %>
+			  <span id="service-<%= model_year_service_stub.id %>-confirm-icon" class="fa fa-lg fa-check fa-fw"></span>
+			<% end %>
+
+	  <% vote_hash = { interval_id: interval.id, vote_type_id: reject_vote_type} %>
+		<%= link_to votes_path(vote_hash),
+		id: "service-#{model_year_service_stub.id}-reject-link",
+		class: reject_class_list,
+		action: :create,
+		method: :post,
+		:remote => true,
+		"data-toggle" => "tooltip",
+		"data-placement" => "top",
+		"title" => "Reject" do %>
+		  <span id="service-<%= model_year_service_stub.id %>-reject-icon" class="fa fa-lg fa-remove fa-fw"></span>
+		<% end %>
+
+
+	</td>
+	<td class="no-stretch">
+			<span class="<%= interval_text_class_list %>" data-toggle="tooltip" data-placement="top" title="1st Service">
+				<%= "#{model_year_service_stub.first_service_miles}mi " %>
+			</span>
+			|
+			<span class="<%= interval_text_class_list %>" data-toggle="tooltip" data-placement="top" title="Service Interval"> <%= "#{model_year_service_stub.interval_months}mo/#{model_year_service_stub.interval_miles}mi" %> </span>
+	</td>
+	<td class="no-stretch">
+	  <% if signed_in? %>
+	    <% href = edit_model_year_service_interval_path(model_year_service_stub) %>
+		  <a id="service-<%= model_year_service_stub.id %>-edit-link"
+				 class="<%= edit_class_list %>"
+				 data-toggle="modal"
+				 data-target="#edit-model-year-service-interval-modal-window"
+				 data-remote="true"
+				 href="<%= href %>">
+				<i id="service-<%= model_year_service_stub.id %>-edit-icon"
+					    class="fa fa-lg fa-pencil fa-fw"
+					    data-toggle="tooltip"
+					    data-placement="top"
+				      title="Edit">
+				</i>
+		  </a>
+		<% else %>
+			<a  id="service-<%= model_year_service_stub.id %>-edit-link"
+					class="<%= edit_class_list %>"
+					data-toggle="modal"
+					data-target="#sign-in-modal">
+				<i id="service-<%= model_year_service_stub.id %>-edit-icon"
+					 class="fa fa-lg fa-pencil fa-fw"
+					 data-toggle="tooltip"
+					 data-placement="top"
+					 title="Edit"> </i>
+			</a>
+		<% end %>
+  </td>
+</tr>

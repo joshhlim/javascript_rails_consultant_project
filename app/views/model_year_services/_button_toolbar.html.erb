@@ -1,0 +1,43 @@
+<% request_class_list   = 'btn btn-default' %>
+
+<% if signed_in? %>
+  <% existing_request = @model_year_service.model_year_service_update_requests.
+                                            where(user_id: current_user.id).
+                                            first %>
+<% else %>
+  <% existing_request = @model_year_service.model_year_service_update_requests.
+                                            where(ip_address: request.remote_ip).
+                                            first %>
+  <% existing_request ||= @model_year_service.model_year_service_update_requests.
+                                              where(session_id: request.session_options[:id]).
+                                              first %>
+<% end %>
+
+<% if existing_request.present?
+     request_class_list += ' disabled'
+   end 
+  %>
+
+<div class="btn-toolbar" role="toolbar">
+  <div class="btn-group btn-group-justified btn-group-fill-height">
+  	
+	  <%= link_to model_year_service_update_requests_path(model_year_service_id: @model_year_service.id),
+	            id: "update-request-button",
+	            class: request_class_list,
+	            action: :create,
+	            method: :post,
+	            remote: true do %>
+	    Request Update
+		<% end %>
+    	
+    <% if signed_in? %>	
+	    <a data-target="#add-to-garage-modal-window" class="btn btn-default" role="button" data-toggle="modal">
+	      Add Bike to Garage
+	    </a>
+  	<% else %>
+	    <a href="#" class="btn btn-default" role="button" data-toggle="modal" data-target="#sign-in-modal">
+	      Add to Garage
+	    </a>
+    <% end %>
+  </div>
+</div>

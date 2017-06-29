@@ -1,0 +1,6 @@
+<li>
+	<% item = user_requirement_item_stub.requirement_item %>
+	<% link_text  = "#{item.name}" %>
+	<% link_text += " (#{item.detail})" unless item.detail.blank? %> 
+	<%= link_to link_text, user_requirement_item_stub %>
+</li>

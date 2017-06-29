@@ -1,0 +1,23 @@
+<div class="dashboard-toolbox">
+  <button data-toggle="collapse" data-target="#tool-dash" class="collapse-button">My Toolbox</button>
+    <div id="tool-dash" class="collapse">
+      <a href="<%= user_requirement_items_path %>" class="list-group-item">
+      <h4 class="list-group-item-heading collapse">My Toolbox</h4>
+      <table class="spreadsheet table-striped">
+        <thead>
+          <tr class="spreadsheet-header">
+            <th>Tool/Supply</th>
+            <th></th>
+          </tr>
+        </thead>
+        <% @user_requirement_items.each do |item| %>
+          <tr>
+            <td><%= link_to item.requirement_item.full_display, item %></td>
+            <td><%= link_to 'Edit', edit_user_requirement_item_path(item) %> | <%= link_to 'Delete', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </table>
+      <%= link_to 'Add to Toolbox', new_user_requirement_item_path, id: "add_tool_button" %>
+    </a>
+  </div>
+</div>

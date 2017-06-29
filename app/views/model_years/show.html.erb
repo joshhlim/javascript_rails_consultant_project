@@ -1,0 +1,49 @@
+<% provide(:title, @model_year.name) %>
+<% locals_for_partial = {
+	    	             confirm_vote_type: get_confirm_vote_type,
+	    	             reject_vote_type:  get_reject_vote_type
+	    } %>
+<div class="row">
+	<div class="col-md-2 text-center">
+		<%= image_tag_thumbnail_from_make_model_year(@model_year.make.name,
+		                                             @model_year.model.name,
+		                                             @model_year.year) %>
+  </div>
+  <div class="col-md-4">
+      <h3>
+        <%= "#{@model_year.name}" %>
+      </h3>
+  </div>
+  <div class="col-md-6 pull-right">
+		<%= render 'button_toolbar' %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <% if @model_year.model_year_services.any? %>
+      <h3>Maintenance &amp; Repair</h3>
+      <table class="table table-striped">
+			  <tbody>
+
+        <%= render partial: 'model_year_services/model_year_service_stub',
+                   collection: @model_year_services,
+                   locals: locals_for_partial %>
+        </tbody>
+			</table>
+      <%= will_paginate @model_year_services %>
+    <% end %>
+  </div>
+  <div class="col-md-6">
+    <% if @quick_specs.any? %>
+      <h3>Quick Specs</h3>
+      <table class="table table-striped">
+			  <tbody>
+			    <%= render partial: 'quick_spec', collection: @quick_specs, locals: locals_for_partial %>
+			  </tbody>
+			</table>
+    <% end %>
+  </div>
+</div>
+<%= render 'user_vehicles/add_to_garage_modal'       if signed_in? %>
+<%= render 'specifications/edit_modal'               if signed_in? %>
+<%= render 'model_year_services/edit_interval_modal' if signed_in? %>

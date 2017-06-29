@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= full_title(yield(:title)) %></title>
+    <link href="https://fonts.googleapis.com/css?family=Teko|PT+Sans:400,700" rel="stylesheet">
+    <script src="https://use.fontawesome.com/e86b65ccf9.js"></script>
+    <%= stylesheet_link_tag "application", media: "all",
+                                           "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+    <%= render 'layouts/shim' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  </head>
+  <body>
+  <%= render 'layouts/header' %>
+    <div class="container">
+      <div id="flash" class="alert">
+			  <% flash.each do |name, msg| %>
+			    <div class="alert <%= bootstrap_class_for(name) %>" id="<%= "flash_#{name}" %>">
+			    	<%= msg %>
+			    </div>
+			  <% end %>
+      </div>
+      <%= yield %>
+
+      <%= render 'shared/signin_modal' unless signed_in? %>
+      <%= render 'layouts/footer' %>
+    </div>
+
+<!--       <% if Rails.env.development? %>
+        <%= debug(params) %>
+        <%= debug(request.session_options[:id]) %>
+      <% end %> -->
+
+    </div>
+  </body>
+</html>

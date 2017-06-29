@@ -1,0 +1,25 @@
+<div id="vehicle-<%= vehicle.id %>" class="vehicle-info">
+  <div class="vehicle-info-left">
+    <img src="<%= image_path 'default-motorcycle.jpg' %>">
+  </div>
+  <div class="vehicle-info-right">
+    <a href="<%= user_vehicle_path(vehicle) %>"><h4><%= vehicle.full_display %></h4></a>
+    <div class="vehicle-info-mileage">
+      <p><strong>Mileage</strong> <%= vehicle.mileage %></p>
+      <button type="button" class="mileage-update btn btn-secondary">Update mileage</button>
+        <%= form_for vehicle, html: {class: "mileage-update-form", remote: true} do |f| %>
+        <%= f.number_field :mileage %>
+        <%= f.submit "Update" %>
+        <% end %>
+    </div>
+    <ul class="vehicle-info-maintenance">
+    <span>Maintenance due:</span>
+    <% ModelYear.find(vehicle.model_year_id).model_year_services.main_services.each do |service| %>
+      <% if service.need_service?(vehicle.mileage) %>
+        <li><%= link_to service.service.name, model_year_service_path(service.id) %></li>
+      <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+

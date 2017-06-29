@@ -1,0 +1,15 @@
+<% provide(:title, 'All Models') %>
+<h1>All models</h1>
+
+<table class="table table-striped">
+	<thead>
+    <tr>
+    	<th>Model</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @models %>
+  </tbody>
+</table>
+
+<%= will_paginate %>

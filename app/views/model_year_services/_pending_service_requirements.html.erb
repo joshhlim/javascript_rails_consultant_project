@@ -1,0 +1,5 @@
+<% if @model_year_service.service.default_requirements.any? %>
+	<%= render partial: 'load_default_requirement_items_panel' %>
+<% else %>
+  <%= render partial: 'blank_requirement_items', collection: @requirement_categories %>
+<% end %>

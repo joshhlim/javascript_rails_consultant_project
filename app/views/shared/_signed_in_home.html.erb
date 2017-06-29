@@ -1,0 +1,34 @@
+<div class="row">
+  <aside class="col-md-4">
+    <section>
+      <%= render 'shared/user_info' %>
+    </section>
+    <section>
+      <%= render 'shared/stats' %>
+    </section>
+    <section>
+      <% @user_requirement_items = UserRequirementItem.where(user_id: current_user.id) %>
+      <%= render partial: 'user_vehicles/toolbox' %>
+    </section>
+  </aside>
+  <div class="col-md-8">
+    <section>
+    <h4 class="garage-header">My Garage</h4>
+    <% set_user_vehicles %>
+      <% if @user_vehicles.any? %>
+        <div class="vehicles">
+          <% current_user.user_vehicles.each do |vehicle| %>
+            <%= render partial: '/user_vehicles/user_vehicle_maintenance', locals: {vehicle: vehicle} %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="vehicles">
+          <h3 class="vehicles"> Add Your Ride </h3>
+            <% @user_vehicle = UserVehicle.new %>
+            <% @makes = Make.all.order('name ASC') %>
+            <%= render partial: 'user_vehicles/new_form' %>
+        </div>
+      <% end %>
+    </section>
+  </div>
+</div>

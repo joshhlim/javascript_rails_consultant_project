@@ -1,0 +1,5 @@
+<% html = render 'model_year_service_requirements/edit_form' %>
+
+$("#edit-model-year-service-requirement-modal-window")
+	.find(".modal-content")
+	.html("<%= escape_javascript html %>");

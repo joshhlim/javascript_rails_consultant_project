@@ -1,0 +1,7 @@
+<% if signed_in? %>
+<div class="container">
+  <%= render 'shared/signed_in_home' %>
+  </div>
+<% else %>
+  <%= render 'shared/signed_out_home' %>
+<% end %>

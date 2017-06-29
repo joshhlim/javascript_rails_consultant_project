@@ -1,0 +1,17 @@
+<% provide(:title, 'All Model Year Services') %>
+<h3 class="text-center">All model year services<br /><small>Most requested listed first</small></h3>
+
+<table class="table table-striped">
+	<thead>
+    <tr>
+    	<th>Vehicle</th>
+      <th>Service</th>
+      <th>Requests</th>
+      <th>1st</th>
+      <th>Interval</th>
+    </tr>
+  </thead>
+    <%= render @model_year_services %>
+</table>
+
+<%= will_paginate %>

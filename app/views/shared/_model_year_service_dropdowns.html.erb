@@ -1,0 +1,50 @@
+<!-- <h3 class="hidden-xs text-center" style="color:">Bike Maintenance<br />Tool Lookup<br /><small>Load your bike/service</small></h3>
+<h4 class="visible-xs text-center">Bike Maintenance<br />Tool Lookup<br /><small>Load your bike/service</small></h4> -->
+
+<%= form_tag '/load', { :method => :get } do %>
+
+<%= select_tag  :make_id,
+								options_from_collection_for_select(Make.all.order('name ASC'), "id", "name"),
+								:prompt => "Select Make",
+								:class => 'form-control' %>
+
+<%= select_tag  :model_id, options_from_collection_for_select([], "id", "name"), :class => 'form-control',
+								"data-option-dependent" => true,
+								"data-option-observed" => "make_id",
+								"data-option-url" => "/makes/:make_id:/models.json",
+								"data-option-key-method" => :id,
+								"data-option-value-method" => :name,
+								"data-option-prompt-text" => "Select Model" %>
+
+<%= select_tag 	:model_year_id, options_from_collection_for_select([], "id", "year"), :class => 'form-control',
+								"data-option-dependent" => true,
+								"data-option-observed" => "model_id",
+								"data-option-url" => "/models/:model_id:/model_years.json",
+								"data-option-key-method" => :id,
+								"data-option-value-method" => :year,
+								"data-option-prompt-text" => "Select Model Year" %>
+
+<%= select_tag 	:service_id, options_from_collection_for_select([], "id", "name"), :class => 'form-control',
+								"data-option-dependent" => true,
+								"data-option-observed" => "model_year_id",
+								"data-option-url" => "/services.json",
+								"data-option-key-method" => :id,
+								"data-option-value-method" => :item_action_display,
+								"data-option-prompt-text" => "Select Service (Optional)" %>
+<br/>
+<!-- This may not be needed, complicates the process of viewing entry
+<%# if !signed_in
+%>
+	<div class="col-md-6">
+		<%#= submit_tag "Save & View", :class => "btn btn-lg btn-primary"
+		%>
+	</div>
+	<br class="visible-xs" />
+<%# end
+%>
+-->
+<div class="col-md-6 homepage-view-btn">
+	<%= submit_tag "View", :class => "btn btn-lg btn-primary"  %>
+</div>
+
+<% end %>

@@ -1,0 +1,156 @@
+<%
+  confirm_class_list   = 'zf-confirm'
+  reject_class_list    = 'zf-reject'
+  add_class_list       = 'zf-add'
+  add_tooltip_text     = 'Add to your toolbox'
+  edit_class_list      = 'zf-edit'
+  text_class_list      = 'text'
+%>
+
+<% if signed_in? %>
+  <% existing_vote = item.model_year_service_requirement_votes.where(user_id: current_user.id).first %>
+  <% item_in_toolbox = item.requirement_item.user_requirement_items.find_by(user_id: current_user.id) %>
+<% else %>
+  <% existing_vote = item.model_year_service_requirement_votes.where(ip_address: request.remote_ip).first %>
+  <% existing_vote ||= item.model_year_service_requirement_votes.where(session_id: request.session_options[:id]).first %>
+<% end %>
+
+<% if existing_vote.present?
+	   if existing_vote.vote_type_id == confirm_vote_type.id
+       confirm_class_list   += ' confirmed in-active'
+       reject_class_list    += ' in-active'
+       text_class_list += ' confirmed'
+     elsif existing_vote.vote_type_id == reject_vote_type.id
+     	 confirm_class_list   += ' in-active'
+       reject_class_list    += ' rejected in-active'
+       text_class_list += ' rejected'
+     end
+   end
+
+   if item_in_toolbox.present?
+   	 add_tooltip_text = "Add to toolbox #{time_ago_in_words(item_in_toolbox.created_at)} ago"
+   	 add_class_list  += ' inactive'
+   end
+  %>
+
+<tr>
+	<td class="no-stretch">
+		<% vote_hash = { model_year_service_requirement_id: item.id, vote_type_id: confirm_vote_type} %>
+
+		<%= link_to model_year_service_requirement_votes_path(vote_hash),
+		            id: "item-#{item.id}-confirm-link",
+		            class: confirm_class_list,
+		            action: :create,
+		            method: :post,
+		            remote: true,
+		            "data-toggle" => "tooltip",
+		            "data-placement" => "top",
+		            "title" => "Confirm" do %>
+
+			<span id="item-<%= item.id %>-confirm-icon" class="fa fa-lg fa-check fa-fw"></span>
+    <% end %>
+
+		<% vote_hash = { model_year_service_requirement_id: item.id, vote_type_id: reject_vote_type} %>
+		<%= link_to model_year_service_requirement_votes_path(vote_hash),
+		            id: "item-#{item.id}-reject-link",
+		            class: reject_class_list,
+		            action: :create,
+		            method: :post,
+		            :remote => true,
+		            "data-toggle" => "tooltip",
+		            "data-placement" => "top",
+		            "title" => "Reject" do %>
+      <span id="item-<%= item.id %>-reject-icon" class="fa fa-lg fa-remove fa-fw"></span>
+    <% end %>
+	</td>
+	<td>
+		<% link_uri = item.requirement_item.link_for_sale	%>
+		<% link_uri ||= amazon_link(item.requirement_item.name, item.requirement_item.detail)	%>
+		<% if item.requirement_item.detail.present? %>
+		  <%= link_to "#{item.requirement_item.name} (#{item.requirement_item.detail})",
+		              link_uri,
+		              :target => "_blank",
+		              class: text_class_list %>
+		<% elsif item.requirement_item.needs_detail? && item.requirement_item.detail.blank? %>
+		  <%= link_to "#{item.requirement_item.name}",
+		              link_uri,
+		              :target => "_blank",
+		              class: text_class_list %>
+		  <%= " (need detail)"%>
+		<% else %>
+		  <%= link_to "#{item.requirement_item.name}",
+		              link_uri,
+		              :target => "_blank",
+		              class: text_class_list %>
+		<% end %>
+
+		<% if !item.substitute_requirement_item_id.blank? %>
+		  <%= " or" %>
+		  <% substitute_item = get_item(item.substitute_requirement_item_id) %>
+		  <% item_string = " #{substitute_item.name}" %>
+			<% item_string += " (#{substitute_item.detail})" if item.requirement_item.detail.present? %>
+
+			<%= link_to item_string, item.requirement_item.link_for_sale, :target => "_blank", class: text_class_list %>
+	  <% end %>
+
+		<% if item.quantity.present? && item.quantity > 0 %>
+			<%= " | Qty: #{item.quantity.to_s}" %>
+			<%= " #{item.quantity_unit}" unless item.quantity_unit.blank? %>
+	  <% elsif item.needs_quantity? %>
+	    <%= " | Qty: (need quantity)" %>
+			<%= " #{item.quantity_unit}" unless item.quantity_unit.blank? %>
+	  <% end %>
+	</td>
+
+	<td class="no-stretch">
+	  <% if signed_in? %>
+	    <a id="item-<%= item.id %>-edit-link"
+	    	 data-toggle="modal"
+	       data-target="#edit-model-year-service-requirement-modal-window"
+	       data-remote="true"
+	       href="<%= edit_model_year_service_requirement_path(item) %>"
+	       class="<%= edit_class_list %>">
+			  <i id="item-<%= item.id %>-edit-icon"
+				    class="fa fa-lg fa-pencil fa-fw"
+				    data-toggle="tooltip"
+				    data-placement="top"
+			      title="Edit/Add Detail">
+			  </i>
+	    </a>
+			<%= link_to toolbox_quick_add_path(requirement_item_id: item.requirement_item.id),
+			            id: "item-#{item.id}-add-to-toolbox-link",
+			            class: add_class_list,
+			            action: :create,
+			            method: :post,
+			            :remote => true,
+			            "data-toggle" => "tooltip",
+			            "data-placement" => "top",
+			            "title" => add_tooltip_text do %>
+	      <i id="item-<%= item.id %>-add-icon" class="fa fa-lg fa-plus fa-fw"></i>
+	    <% end %>
+	  <% else %>
+	    <a id="item-<%= item.id %>-edit-link"
+			 class="<%= edit_class_list %>"
+			 data-toggle="modal"
+			 data-target="#sign-in-modal">
+			<span id="item-<%= item.id %>-edit-icon"
+				    class="fa fa-lg fa-pencil fa-fw"
+				    data-toggle="tooltip"
+				    data-placement="top"
+			      title="Edit/Add Detail">
+			</span>
+	  </a>
+			<a id="item-<%= item.id %>-add-link"
+				class="<%= add_class_list %>"
+				data-toggle="modal"
+				data-target="#sign-in-modal">
+				<span id="item-<%= item.id %>-add-icon"
+					    class="fa fa-lg fa-plus fa-fw"
+					    data-toggle="tooltip"
+				      data-placement="top"
+				      title="Add to your toolbox">
+				</span>
+			</a>
+		<% end %>
+	</td>
+</tr>

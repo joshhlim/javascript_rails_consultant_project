@@ -1,0 +1,27 @@
+// Place all the styles related to the Users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.spreadsheet {
+  width: 100%;
+  max-height: 400px;
+  margin: 10px auto;
+  display: block;
+  overflow-x: auto;
+  border: 3px solid #233237;
+  border-radius: 3px;
+}
+
+.spreadsheet th, td {
+  border-bottom: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  width:100%;
+  white-space:nowrap;
+}
+
+.spreadsheet a {
+  text-decoration: none;
+  color: black;
+}

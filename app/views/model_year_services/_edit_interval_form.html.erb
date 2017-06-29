@@ -1,0 +1,63 @@
+<div id="modal-edit-model-year-service-interval-fields">
+	<div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	  <h4 class="modal-title">Edit "<%= @model_year_service.service.name %>"</h4>
+	</div>
+	<div class="modal-body">
+		<% if signed_in? %>
+			<%= form_tag update_model_year_service_interval_path, method: :patch do %>
+			
+			  <%= hidden_field_tag("id", @model_year_service.id) %>
+			  
+			  <div class="field row">
+			  	<div class="col-md-4 col-xs-4">
+			  		<%= label_tag 'First Service (miles):', nil, class: "control-label" %>
+			  	</div>
+			  	<div class="col-md-4 col-xs-4">
+			  		<% value = (@model_year_service.first_service_miles.present? ? 
+			  	                @model_year_service.first_service_miles
+				  	              : nil) %>
+					  <%= number_field_tag "interval[first_service_miles]", 
+					  	                     value,
+					  	                     placeholder: "(e.g. 600)",
+					  	                     class: "form-control" %>
+					</div>
+				</div>					
+				<div class="field row">
+					<div class="col-md-4 col-xs-4">
+						<%= label_tag "Interval (miles):", nil, class: "control-label" %>
+					</div>
+		  	  <div class="col-md-4 col-xs-4">
+		  	  	<% value = (@model_year_service.interval_miles.present? ? 
+		  	                  @model_year_service.interval_miles
+			  	                : nil) %>
+				  	<%= number_field_tag "interval[interval_miles]", 
+				  	                   value,
+				  	                   placeholder: "(e.g. 2500)",
+				  	                   class: "form-control"  %>
+			  	</div>
+			  </div>
+			  <div class="field row">
+					<div class="col-md-4 col-xs-4">
+						<%= label_tag "Interval (months):", nil, class: "control-label" %>
+					</div>			  	  
+			  	<div class="col-md-4 col-xs-4">
+			  		<% value = (@model_year_service.interval_months.present? ? 
+		  	                  @model_year_service.interval_months
+			  	                : nil) %>
+				  	<%= number_field_tag "interval[interval_months]", 
+				  	                   value,
+				  	                   placeholder: "(e.g. 6, 12)",
+				  	                   class: "form-control"  %>
+			    </div>
+			  </div>
+			  <div class="actions">
+			    <%= button_tag "Edit Interval", class: "btn btn-large btn-primary" %>
+			  </div>
+			<% end %>
+		<% end %>
+	</div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  </div>
+</div>
