@@ -4,6 +4,6 @@ Zen and the Art of Finding Tools lets you add motorcycles to your garage, and fi
 
 ## [View Demo and Documentation &rarr;](http://limhjosh.github.io)
 
-![](https://image.ibb.co/mZBnua/zaftool.jpg)
+![](zaftool.jpg)
 
-![](https://image.ibb.co/kocGnv/zaf.jpg)
+![](zaf.jpg)
